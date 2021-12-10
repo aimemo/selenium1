@@ -1,14 +1,11 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.by import By
+from HW_main_page import MainPage
 
 driver = webdriver.Chrome(ChromeDriverManager().install())
-driver.get("http://ya.ru")
+main_page = MainPage(driver)
+main_page.open()
 assert "Яндекс" in driver.title
-elem = driver.find_element(By.ID, "text")
-elem.clear()
-elem.send_keys("Python")
-elem.send_keys(Keys.RETURN)
-assert "No results found." not in driver.page_source
-driver.quit()
+main_page.search("Python")
+assert "No results found." not in main_page.page_source()
+main_page.quit()
